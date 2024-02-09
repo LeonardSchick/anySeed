@@ -1,0 +1,19 @@
+{
+  "name": "anyseed",
+  "version": "1.0.0",
+  "description": "A novel private key generator that allows for any data to be used as seed.",
+  "main": "privKeyGen.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LeonardSchick/anySeed.git"
+  },
+  "author": "Leonard Schick",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LeonardSchick/anySeed/issues"
+  },
+  "homepage": "https://github.com/LeonardSchick/anySeed#readme"
+}
