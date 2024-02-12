@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Private Key Generator</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/js-sha3/0.9.3/sha3.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+
     <style>
         textarea {
             width: 100%;
@@ -23,24 +25,39 @@
 </head>
 <body>
     <h1>Private Key Generator</h1>
-    <p>This project allows you to generate a private key for the Secp256k1 curve using a customizable seed and salt. By providing your own seed and salt, you can create a unique and memorable private key.</p>
-    
+    <p>This key derivation function allows you to generate a private key for the Secp256k1 curve using any seed and password of choice. By providing your own seed and password, you can create a unique and memorable seed for your private key.</p>
+    <p class="gradient-link">This is a client-side script, meaning it can be executed offline by disconnecting from internet once the page has loaded. The source code is available at: <a href="https://github.com/LeonardSchick/anySeed" target="_blank" rel="noopener noreferrer">GitHub Repository</a>.</p>
+
+    <h2>Algorithm</h2>
+    <ol>
+        <li>Encode both seed and password to UTF-8.</li>
+        <li>Hash (keccak-256) the encoded seed and password separately <var>r</var> amount of times, where <var>r = seed.length * password.length<sup> 2</sup></var>.</li>
+        <li>Concatenate the hashed seed with the hashed password and hash the concatenated hashes for <var>r</var> rounds again.</li>
+        <li>Calculate the private key (<var>d</var>) by bringing the resulting hash within the interval 1 to <var>n</var> (order of curve).
+        <pre><code>hash mod n = d
+if d == 0
+    request new input
+else
+    return d
+        </code></pre>
+        </li>
+    </ol>  
+    <label for="seed">Seed</label>
     <textarea id="seed" placeholder="Enter your seed text here"></textarea>
-    <textarea id="salt" placeholder="Enter your salt text here"></textarea>
+    <label for="pass">Password</label>
+    <textarea id="pass" placeholder="Enter your pass text here"></textarea>
     <button onclick="generateKeys()">Generate Keys</button>
     
-    <p><strong>Generated Private Key:</strong> <span id="privateKey"></span></p>
-    
-
+    <p id="keyTitle"><strong>Generated Private Key:</strong> <span id="privateKey"></span></p>
 
     <script src="privKeyGen.js"></script>
     <script>
         
-        function generateKeys() {
+        async function generateKeys() {
             const seed = document.getElementById('seed').value;
-            const salt = document.getElementById('salt').value;
-            
-            const privateKey = generatePrivateKey(seed, salt);
+            const pass = document.getElementById('pass').value;
+            const privateKey = generatePrivateKey(seed, pass);
+
             console.log(privateKey);
             document.getElementById('privateKey').innerText = privateKey;
         }
