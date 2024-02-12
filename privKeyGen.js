@@ -1,51 +1,48 @@
-const crypto = require('crypto');
 
-function hexlifyString(inputString) {
-    // Step 1: Convert input string to hexadecimal
-    return Buffer.from(inputString, 'utf8').toString('hex');
+function toUTF8(inputString) {
+    const encoder = new TextEncoder();
+    const utf8Bytes = encoder.encode(inputString);
+    return utf8Bytes;
 }
 
-function hashHexadecimal(hexData, iterations) {
-    // Step 2 & 3: Hash the hexadecimal data for a specified number of iterations
-    for (let i = 0; i < iterations; i++) {
-        let hash = crypto.createHash('sha3-256');
-        hash.update(Buffer.from(hexData, 'hex'));
-        hexData = hash.digest('hex');
+
+function hash(data, rounds) {
+    let hash = data;
+    for (let i = 0; i < rounds; i++) {
+        hash = keccak256(hash);
     }
-    return hexData;
+    return hash;
 }
 
-function calculatePrivateKey(hashSeed, hashSalt, n) {
-    // Step 4: Calculate the private key from hashed seed and salt
+function getHashRounds(seed, salt) {
+    const x = seed.length; 
+    const y = salt.length; 
+    return x * y; // Product of character counts as the number of hash rounds
+}
+
+
+function calculatePrivateKey(hashSeed, hashSalt) {
+    // Curve order of Secp256k1
+    const n = BigInt('0xfffffffffffffffffffffffffffffffebaaedce6af48a03bbfd25e8cd0364141');
     const combinedHash = hashSeed + hashSalt;
     let d = BigInt('0x' + combinedHash) % n;
     if (d === BigInt(0)) {
-        return "failed";
+        return null;
     } else {
         return d.toString(16);
     }
 }
 
 function generatePrivateKey(seed, salt) {
-    // Convert seed and salt to hexadecimal
-    const seedHex = hexlifyString(seed);
-    const saltHex = hexlifyString(salt);
+    const UTF8Seed = toUTF8(seed);
+    const UTF8Salt = toUTF8(salt);
+
+    const r = getHashRounds(UTF8Seed, UTF8Salt);
+    const hashSeed = hash(UTF8Seed, r);
+    const hashSalt = hash(UTF8Salt, r);
     
-    // Determine the number of iterations (with a practical limit)
-    const x = parseInt(saltHex, 16) % 1000; // Limiting the value of x for practical execution time
-    
-    // Hash the seed and salt
-    const hashSeed = hashHexadecimal(seedHex, x);
-    const hashSalt = hashHexadecimal(saltHex, x);
-    
-    // Secp256k1 curve's order
-    const n = BigInt('0xfffffffffffffffffffffffffffffffebaaedce6af48a03bbfd25e8cd0364141');
-    
-    // Calculate the private key
-    const privateKey = calculatePrivateKey(hashSeed, hashSalt, n);
+    const privateKey = calculatePrivateKey(hashSeed, hashSalt);
     return privateKey;
 }
 
-// Example usage
-const privateKey = generatePrivateKey("example seed text", "unique salt");
-console.log(privateKey);
+

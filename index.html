@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Private Key Generator</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-sha3/0.9.3/sha3.min.js"></script>
+    <style>
+        textarea {
+            width: 100%;
+            min-height: 50px;
+            resize: both; /* Allows resizing both horizontally and vertically */
+            padding: 10px;
+            margin-bottom: 10px;
+            box-sizing: border-box; /* Includes padding and border in the element's total width and height */
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Private Key Generator</h1>
+    <p>This project allows you to generate a private key for the Secp256k1 curve using a customizable seed and salt. By providing your own seed and salt, you can create a unique and memorable private key.</p>
+    
+    <textarea id="seed" placeholder="Enter your seed text here"></textarea>
+    <textarea id="salt" placeholder="Enter your salt text here"></textarea>
+    <button onclick="generateKeys()">Generate Keys</button>
+    
+    <p><strong>Generated Private Key:</strong> <span id="privateKey"></span></p>
+    
+
+
+    <script src="privKeyGen.js"></script>
+    <script>
+        
+        function generateKeys() {
+            const seed = document.getElementById('seed').value;
+            const salt = document.getElementById('salt').value;
+            
+            const privateKey = generatePrivateKey(seed, salt);
+            console.log(privateKey);
+            document.getElementById('privateKey').innerText = privateKey;
+        }
+    </script>
+</body>
+</html>
