@@ -49,7 +49,8 @@
     <textarea id="pass" placeholder="Enter your pass text here"></textarea>
     <button onclick="generateKeys()">Generate Keys</button>
     
-    <p id="keyTitle"><strong>Generated Private Key:</strong> <span id="privateKey"></span></p>
+    <p id="keyTitle" onclick="copyToClipboard()"><strong>Generated Private Key:</strong> <span id="privateKey"></span></p>
+    <span id="copyNotification" style="display: none;">Copied!</span>
 
     <script src="privKeyGen.js"></script>
     <script>

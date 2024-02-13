@@ -58,9 +58,20 @@ button:hover {
 
 #privateKey {
     font-family: "Courier New", Courier, monospace;
-    color: #ff6a00; /* Highlight color */
+    color: #ff6a00;
     padding: 10px;
     border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#keyTitle {
+    background: linear-gradient(to right, #ff6a00, #ee0979);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    font-family: "Courier New", Courier, monospace;
+    font-weight: bolder;
 }
 
 #algoTitle {
@@ -76,3 +87,23 @@ p a {
 p a:hover {
     text-decoration: underline;
 }
+
+#keyTitle {
+    position: relative; /* Make sure the parent is positioned to anchor absolute positioning */
+    
+}
+  
+#copyNotification {
+    display: none; /* Hidden by default */
+    background-color: #f0f0f0;
+    color: #ffffff;
+    
+    border: 1px solid #ddd;
+    padding: 5px 10px;
+    border-radius: 5px;
+    position: absolute;
+    z-index: 1;
+}
+  
+
+  

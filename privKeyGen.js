@@ -52,3 +52,57 @@ function generatePrivateKey(seed, pass) {
 }
 
 
+function copyToClipboard() {
+    var privateKeyText = document.getElementById("privateKey").innerText;
+    navigator.clipboard.writeText(privateKeyText)
+      .then(() => {
+        // Create or update the notification span
+        var notification = document.getElementById("dynamicCopyNotification");
+        if (!notification) {
+          notification = document.createElement("span");
+          notification.id = "dynamicCopyNotification";
+          notification.style.marginLeft = "5px"; // Space it from the private key text
+          notification.textContent = "Copied!";
+          notification.style.color = "white";
+          // Append the notification directly after the privateKey span
+          var privateKeySpan = document.getElementById("privateKey");
+          if (privateKeySpan.nextSibling) {
+            privateKeySpan.parentNode.insertBefore(notification, privateKeySpan.nextSibling);
+          } else {
+            privateKeySpan.parentNode.appendChild(notification);
+          }
+        } else {
+          notification.textContent = "Copied!"; // Update text if needed
+          notification.style.display = "inline"; // Make it visible again if it was hidden
+          notification.style.color = "white";
+        }
+  
+        // Automatically hide the notification after a brief period
+        setTimeout(function() {
+          notification.style.display = "none";
+        }, 2000);
+      })
+      .catch(err => {
+        console.error("Failed to copy: ", err);
+      });
+  }
+  
+      
+
+/*
+function copyToClipboard() {
+    // Get the element containing the text
+    var privateKeyText = document.getElementById("privateKey").innerText;
+  
+    // Use the Clipboard API to copy the text
+    navigator.clipboard.writeText(privateKeyText)
+      .then(() => {
+        // Success feedback, could use something less intrusive than alert in a real application
+        console.log("Copied to clipboard successfully!");
+      })
+      .catch(err => {
+        // Error handling
+        console.error("Failed to copy: ", err);
+      });
+  }
+  */
