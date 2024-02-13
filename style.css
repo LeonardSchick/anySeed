@@ -28,7 +28,7 @@ label {
 }
 
 textarea {
-    width: 100%;
+    width: 750px;
     min-height: 150px;
     resize: vertical;
     padding: 10px;
@@ -90,8 +90,7 @@ p a:hover {
 
 #keyTitle {
     position: relative; /* Make sure the parent is positioned to anchor absolute positioning */
-    
-}
+}   
   
 #copyNotification {
     display: none; /* Hidden by default */

@@ -41,7 +41,7 @@
         <li>Encode both seed and password to UTF-8.</li>
         <li>Hash (keccak-256) the encoded seed and password separately <var>r</var> amount of times, where <var>r = seed.length * password.length<sup> 2</sup></var>.</li>
         <li>Concatenate the hashed seed with the hashed password and hash the concatenated hashes for <var>r</var> rounds again.</li>
-        <li>Calculate the private key (<var>d</var>) by bringing the resulting hash within the interval 1 to <var>n</var> (order of curve), hash mod <var>n</var> = <var>d</var>.</li>
+        <li>Calculate the private key <var>d</var> by bringing the resulting hash within the interval 1 to <var>n</var> (order of curve), hash mod <var>n</var> = <var>d</var>.</li>
     </ol>  
     <label for="seed" >Seed</label>
     <textarea id="seed" placeholder="Enter your seed text here"></textarea>
