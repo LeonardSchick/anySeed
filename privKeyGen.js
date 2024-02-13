@@ -8,7 +8,7 @@ function toUTF8(inputString) {
 function getHashRounds(seed, pass) {
     const x = seed.length; 
     const y = pass.length; 
-    return x * y; // Product of character counts as the number of hash rounds
+    return x * (y**2); // Product of character counts as the number of hash rounds
 }
 
 function hash(data, rounds) {
@@ -38,7 +38,7 @@ function generatePrivateKey(seed, pass) {
 
     // Hash seed and pass separately for r rounds
     const r = getHashRounds(UTF8Seed, UTF8Pass);
-    console.log("r: " + r)
+    
     const hashSeed = hash(UTF8Seed, r);
     const hashPass = hash(UTF8Pass, r);
     

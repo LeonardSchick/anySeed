@@ -1,37 +1,48 @@
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+body, html {
+    font-family: "Courier New", Courier, monospace;
+    color: #f5f5f5;
+    background: #3c373c; /* Updated dark background */
     margin: 0;
     padding: 20px;
-    background-color: #333; /* Dark background */
-    color: #f5f5f5; /* Light text color for contrast */
+    display: vertical;
+    align-items: center;
+    justify-content: center;
+    height: auto;
+    width: auto;
 }
 
 h1, h2, label, .gradient-link a {
-    background: linear-gradient(to right, #ff6a00, #ee0979); /
+    background: linear-gradient(to right, #ff6a00, #ee0979);
     -webkit-background-clip: text;
     background-clip: text;
-    color: transparent; /* Gradient text effect */
+    color: transparent; /* Maintain gradient text effect */
+   
     padding: 0;
     margin: 10px 0;
-	text-shadow: 0px 0px 1px rgba(0,0,0,0.3);
+    margin-top:     0px;
+}
+
+label {
+    margin-top: 30px;
+    display: inline-block;
 }
 
 textarea {
     width: 100%;
-    min-height: 80px;
+    min-height: 150px;
     resize: vertical;
     padding: 10px;
     margin-top: 5px;
-    background-color: #555; /* Darker than body for contrast */
-    color: #f5f5f5; /* Light text for readability */
+    background-color: #555; /* Slightly lighter than body for contrast */
+    color: #f5f5f5; /* Adjusted for readability */
     border: 1px solid #777;
     border-radius: 5px;
     box-sizing: border-box;
 }
 
 button {
-    background: linear-gradient(to right, #ff6a00, #ee0979); 
-    color: white;
+    background: linear-gradient(to right, #ff6a00, #ee0979);
+    color: rgb(210, 210, 210);
     border: none;
     border-radius: 5px;
     padding: 10px 20px;
@@ -42,23 +53,26 @@ button {
 }
 
 button:hover {
-    opacity: 0.8; /* Slight transparency effect on hover */
+    opacity: 0.8;
 }
 
-/* Optional: Style for the result display */
 #privateKey {
-    font-family: monospace;
-    color: #ff6a00; /* Use one of the gradient colors for contrast */
+    font-family: "Courier New", Courier, monospace;
+    color: #ff6a00; /* Highlight color */
     padding: 10px;
     border-radius: 5px;
 }
 
+#algoTitle {
+    margin-top: 50px;
+}
+
 p a {
-    color: #ff6a00; /* Adjust the color to fit your site's theme */
-    text-decoration: none; /* Removes underline from links */
-    font-weight: bold; /* Makes the link text slightly bolder */
+    color: #ff6a00;
+    text-decoration: none;
+    font-weight: bold;
 }
 
 p a:hover {
-    text-decoration: underline; /* Adds underline on hover for visual feedback */
+    text-decoration: underline;
 }

@@ -25,24 +25,25 @@
 </head>
 <body>
     <h1>Private Key Generator</h1>
-    <p>This key derivation function allows you to generate a private key for the Secp256k1 curve using any seed and password of choice. By providing your own seed and password, you can create a unique and memorable seed for your private key.</p>
-    <p class="gradient-link">This is a client-side script, meaning it can be executed offline by disconnecting from internet once the page has loaded. The source code is available at: <a href="https://github.com/LeonardSchick/anySeed" target="_blank" rel="noopener noreferrer">GitHub Repository</a>.</p>
+    <p>This key derivation function (KDF) allows you to generate a private key for any blockchain using the Secp256k1 curve (i.e Bitcoin and Ethereum), using any seed and password of choice.<br>
+        It is resistant to trivial dictionary and rainbow table attacks, unlike the conventional method of using SHA256 with a single input.<br>
+        With that said, resistance to brute-force attacks depends on the input. It is recommended to use a strong password and, preferably, a non-stereotypical quote or text as the seed.<br>
+        The idea is to use a relatively large seed, such as a quote, poem, or page from a book, combined with a shorter personal password that is not used in any other application
+    </p>
 
-    <h2>Algorithm</h2>
+    
+    <p class="gradient-link">This is a client-side script, meaning it can be executed offline by disconnecting from the internet once the page has loaded, as everything is done in your browser.<br>
+        Full source code: <a href="https://github.com/LeonardSchick/anySeed" target="_blank" rel="noopener noreferrer">GitHub Repository</a>.</p>
+    
+
+    <h2 id="algoTitle">Algorithm</h2>
     <ol>
         <li>Encode both seed and password to UTF-8.</li>
         <li>Hash (keccak-256) the encoded seed and password separately <var>r</var> amount of times, where <var>r = seed.length * password.length<sup> 2</sup></var>.</li>
         <li>Concatenate the hashed seed with the hashed password and hash the concatenated hashes for <var>r</var> rounds again.</li>
-        <li>Calculate the private key (<var>d</var>) by bringing the resulting hash within the interval 1 to <var>n</var> (order of curve).
-        <pre><code>hash mod n = d
-if d == 0
-    request new input
-else
-    return d
-        </code></pre>
-        </li>
+        <li>Calculate the private key (<var>d</var>) by bringing the resulting hash within the interval 1 to <var>n</var> (order of curve), hash mod <var>n</var> = <var>d</var>.</li>
     </ol>  
-    <label for="seed">Seed</label>
+    <label for="seed" >Seed</label>
     <textarea id="seed" placeholder="Enter your seed text here"></textarea>
     <label for="pass">Password</label>
     <textarea id="pass" placeholder="Enter your pass text here"></textarea>
