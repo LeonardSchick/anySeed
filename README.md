@@ -1,51 +1,35 @@
 # Private Key Generator
-
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 ![JavaScript](https://img.shields.io/badge/JavaScript-ES6%2B-yellow.svg)
 ![HTML5](https://img.shields.io/badge/HTML5-%E2%9C%93-orange.svg)
 ![CSS3](https://img.shields.io/badge/CSS3-%E2%9C%93-blue.svg)
 
 ## Overview
-
 **A Password-Based Key Derivation Function** is used client-side to securely generate private keys for blockchain applications using the Secp256k1 curve, which is used by blockchains such as Bitcoin and Ethereum. By leveraging a simple password-based derivation function (PBKDF) with key stretching and a pseudo-salt mechanism, this generator reduces some common risks associated with traditional brain wallets, making it more resistant to brute force, such as dictionary and rainbow table attacks.
 
+
 ## Features
+- **Custom Seed & Password:** Use any text and password of choice.
+- **Secure Hashing:** Uses Keccak-256 for multiple rounds based on input size.
+- **Offline Usage:** All operations are done in the browser, no server required.
+- **Blockchain Compatible:** Generates private keys for use with Secp256k1-based systems.
 
-- **Secure Key Generation**: Utilizes the Secp256k1 curve to generate private keys compatible with major blockchains.
-- **Key Stretching**: Enhances security by performing multiple hashing rounds based on the length of the seed and password.
-- **Pseudo-Salt Mechanism**: Adds an additional layer of security to prevent precomputed attacks.
-- **Client-Side Execution**: All operations are performed locally in the browser, ensuring that your seed and password never leave your device.
-- **Offline Capability**: Can be used entirely offline by disconnecting from the internet after loading the page.
-- **User-Friendly Interface**: Simple and intuitive design with easy-to-use input fields and copy functionality.
+## How the seed and password is turned into a private key
+1. Convert the seed and password to UTF-8 for a standardized input.
+2. Hash (keccak-256) the encoded seed and password separately r amount of times, where r = seed.length * password.length 2.
+3. Concatenate the hashed seed with the hashed password and hash the concatenated hashes for r rounds again.
+4. Calculate the private key d by bringing the resulting hash within the interval 1 to n (order of curve), hash mod n = d.
 
-## How It Works
+## Usage
+1. **Enter Seed:** Input a quote, poem, or any text as your seed.
+2. **Enter Password:** Provide a secure password.
+3. **Generate Keys:** Click "Generate Keys" to create your private key.
+4. **Copy to Clipboard:** Click the key to copy it
+5. **Import key into wallet of choice:** Works with any blockchain that uses the Secp256k1 curve. 
 
-1. **Input**: Users provide a seed (e.g., a quote, poem, or text) and a password.
-2. **Encoding**: Both seed and password are encoded to UTF-8 to ensure data uniformity.
-3. **Hashing**:
-   - Both the seed and password are hashed separately using the Keccak-256 algorithm for a number of rounds calculated as `r = seed.length * password.length²`.
-   - The resulting hashes are concatenated and hashed again for `r` additional rounds.
-4. **Private Key Calculation**: The final hash is converted into a private key within the valid range of the Secp256k1 curve.
-5. **Output**: The generated private key is displayed to the user, who can then copy it to the clipboard.
+## Installation
+Clone the repo and open `index.html` in your browser. No extra setup required.
 
-### Security 
-
-- **Key Stretching**: By having the number of hashing rounds as a function of the input lengths, the generator makes brute-force attacks significantly more time-consuming.
-- **Pseudo-Salt**: Incorporates a mechanism similar to salting to further protect against precomputed attacks, ensuring that even if two users use the same seed text, their respective passwords act as a salt, resulting in unique private keys.
-
-## Demo
-
-![Private Key Generator Screenshot](screenshot.png) <!-- Replace with actual screenshot if available -->
-
-## Getting Started
-
-### Prerequisites
-
-- A modern web browser (e.g., Chrome, Firefox, Edge, Safari)
-
-### Installation
-
-1. **Clone the Repository**
-
-   ```bash
-   git clone https://github.com/LeonardSchick/anySeed.git
+```bash
+git clone https://github.com/LeonardSchick/anySeed.git
+cd anySeed
